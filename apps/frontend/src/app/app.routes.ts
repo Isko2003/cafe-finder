@@ -10,7 +10,7 @@ export const routes: Routes = [
     path: 'cafes',
     loadComponent: () =>
       import('./features/cafe-search/cafes-page/cafes-page').then((m) => m.CafesPage),
-    title: 'Kafələr — CafeFinder',
+    title: 'Kafelər — CafeFinder',
   },
   {
     path: 'about',

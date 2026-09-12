@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { CafeMap } from '../cafe-map/cafe-map';
 import { CafeDetail } from '../cafe-detail/cafe-detail';
 import { CafesService } from '../../../core/cafes/cafes.service';
@@ -73,6 +74,10 @@ export class CafesPage implements OnInit {
     return metres >= 1000 ? `${metres / 1000} km` : `${metres} m`;
   }
 
+  protected retry(): void {
+    this.search();
+  }
+
   private search(): void {
     const [lng, lat] = this.center();
 
@@ -84,11 +89,35 @@ export class CafesPage implements OnInit {
         this.loading.set(false);
         this.cafes.set(cafes);
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         this.loading.set(false);
-        this.error.set('Kafələr yüklənə bilmədi. Backend işləyirmi?');
+        this.error.set(this.resolveErrorMessage(err));
         console.error('Kafe sorğusu xətası:', err);
       },
     });
+  }
+
+  private resolveErrorMessage(err: HttpErrorResponse): string {
+    const backendMessage = typeof err.error?.message === 'string' ? err.error.message : null;
+
+    if (err.status === 0) {
+      return 'Backend-ə qoşulmaq mümkün olmadı. Server işə salınıbmı?';
+    }
+
+    if (err.status === 429) {
+      return backendMessage ?? 'Həddindən çox sorğu göndərildi. Bir az gözləyib yenidən cəhd edin.';
+    }
+
+    if (err.status === 400) {
+      return backendMessage ?? 'Sorğu parametrləri yanlışdır.';
+    }
+
+    if (err.status === 503) {
+      return (
+        backendMessage ?? 'Kafələr xidməti hazırda əlçatan deyil. Bir az sonra yenidən cəhd edin.'
+      );
+    }
+
+    return backendMessage ?? 'Kafələr yüklənə bilmədi. Bir az sonra yenidən cəhd edin.';
   }
 }

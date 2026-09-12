@@ -13,7 +13,7 @@ export class Header {
 
   protected readonly links = [
     { path: '/', label: 'Ana səhifə' },
-    { path: '/cafes', label: 'Kafələr' },
+    { path: '/cafes', label: 'Kafelər' },
     { path: '/about', label: 'Haqqımızda' },
     { path: '/contact', label: 'Əlaqə' },
   ];

@@ -16,7 +16,7 @@ export class About {
   protected readonly values: Value[] = [
     {
       title: 'Sadəlik əvvəl gəlir',
-      body: 'Hər yeni funksiya "bu, kafə tapmağı asanlaşdırır, yoxsa çətinləşdirir?" sualından keçir.',
+      body: 'Hər yeni funksiya "bu, kafe tapmağı asanlaşdırır, yoxsa çətinləşdirir?" sualından keçir.',
     },
     {
       title: 'Məlumat şəffaf olmalıdır',

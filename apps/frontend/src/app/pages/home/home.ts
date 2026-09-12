@@ -33,7 +33,7 @@ export class Home {
     {
       index: '3',
       title: 'Xəritədə kəşf et',
-      body: 'Ən yaxın kafələr nişanlarla görünür — ünvan, telefon və vebsayt bir toxunuşda.',
+      body: 'Ən yaxın kafelər nişanlarla görünür — ünvan, telefon və vebsayt bir toxunuşda.',
     },
   ];
 
