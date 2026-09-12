@@ -19,20 +19,60 @@
       </p>
     </div>
 
-    <label class="flex items-center gap-3 font-body text-sm font-medium text-ink">
-      Radius
-      <select
-        #radiusSelect
-        class="rounded-full border border-line bg-paper px-4 py-2 text-sm text-ink outline-none focus:border-copper"
-        (change)="onRadiusChange(radiusSelect.value)"
-      >
-        @for (option of radiusOptions; track option) {
-          <option [value]="option" [selected]="option === radius()">
-            {{ formatRadius(option) }}
-          </option>
-        }
-      </select>
-    </label>
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <label class="relative flex items-center">
+        <span class="sr-only">Kafə adına görə axtar</span>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          class="pointer-events-none absolute left-3.5 text-ink-soft"
+        >
+          <circle cx="7" cy="7" r="5.25" stroke="currentColor" stroke-width="1.4" />
+          <path
+            d="M11 11l3.5 3.5"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"
+          />
+        </svg>
+        <input
+          type="text"
+          placeholder="Kafə adı ilə axtar..."
+          class="w-full rounded-full border border-line bg-paper py-2 pl-9 pr-4 font-body text-sm text-ink outline-none placeholder:text-ink-soft/70 focus:border-copper sm:w-56"
+          [value]="searchQuery()"
+          (input)="onSearchInput($any($event.target).value)"
+        />
+      </label>
+
+      <label class="flex items-center gap-3 font-body text-sm font-medium text-ink">
+        Sırala
+        <select
+          #sortSelect
+          class="rounded-full border border-line bg-paper px-4 py-2 text-sm text-ink outline-none focus:border-copper"
+          (change)="onSortChange(sortSelect.value)"
+        >
+          <option value="distance" [selected]="sortMode() === 'distance'">Məsafəyə görə</option>
+          <option value="name" [selected]="sortMode() === 'name'">Ada görə (A-Z)</option>
+        </select>
+      </label>
+
+      <label class="flex items-center gap-3 font-body text-sm font-medium text-ink">
+        Radius
+        <select
+          #radiusSelect
+          class="rounded-full border border-line bg-paper px-4 py-2 text-sm text-ink outline-none focus:border-copper"
+          (change)="onRadiusChange(radiusSelect.value)"
+        >
+          @for (option of radiusOptions; track option) {
+            <option [value]="option" [selected]="option === radius()">
+              {{ formatRadius(option) }}
+            </option>
+          }
+        </select>
+      </label>
+    </div>
   </div>
 </section>
 
@@ -65,25 +105,36 @@
         <div class="px-5 py-6 font-body text-sm text-ink-soft">
           Bu radiusda kafe tapılmadı. Radiusu artırmağı sına.
         </div>
+      } @else if (visibleCafes().length === 0) {
+        <div class="px-5 py-6 font-body text-sm text-ink-soft">
+          "{{ searchQuery() }}" axtarışına uyğun kafe tapılmadı.
+        </div>
       } @else {
         <div
           class="border-b border-line px-5 py-3 font-body text-xs font-semibold uppercase tracking-wide text-ink-soft/70"
         >
-          {{ cafes().length }} kafe tapıldı
+          {{ visibleCafes().length }} kafe tapıldı
         </div>
         <ul>
-          @for (cafe of cafes(); track cafe.id) {
+          @for (entry of visibleCafes(); track entry.cafe.id) {
             <li>
               <button
                 type="button"
                 class="w-full border-b border-line px-5 py-4 text-left transition-colors hover:bg-paper"
-                [class.bg-paper]="cafe.id === selectedCafeId()"
-                (click)="selectCafe(cafe.id)"
+                [class.bg-paper]="entry.cafe.id === selectedCafeId()"
+                (click)="selectCafe(entry.cafe.id)"
               >
-                <p class="font-display text-[15px] font-semibold text-ink">{{ cafe.name }}</p>
-                <p class="mt-1 font-body text-sm text-ink-soft">{{ cafe.address }}</p>
-                @if (cafe.phone) {
-                  <p class="mt-1 font-body text-sm text-ink-soft">{{ cafe.phone }}</p>
+                <div class="flex items-start justify-between gap-2">
+                  <p class="font-display text-[15px] font-semibold text-ink">
+                    {{ entry.cafe.name }}
+                  </p>
+                  <span class="shrink-0 font-body text-xs font-medium text-copper-deep">{{
+                    formatDistanceM(entry.distanceM)
+                  }}</span>
+                </div>
+                <p class="mt-1 font-body text-sm text-ink-soft">{{ entry.cafe.address }}</p>
+                @if (entry.cafe.phone) {
+                  <p class="mt-1 font-body text-sm text-ink-soft">{{ entry.cafe.phone }}</p>
                 }
               </button>
             </li>
@@ -93,7 +144,11 @@
     </aside>
 
     <div class="relative order-1 h-95 lg:order-2 lg:h-full lg:flex-1">
-      <app-cafe-map [center]="center()" [cafes]="cafes()" [focusCafeId]="selectedCafeId()" />
+      <app-cafe-map
+        [center]="center()"
+        [cafes]="visibleCafeList()"
+        [focusCafeId]="selectedCafeId()"
+      />
 
       <div
         class="pointer-events-none absolute inset-x-0 top-0 z-10 flex justify-center p-4 sm:justify-start"

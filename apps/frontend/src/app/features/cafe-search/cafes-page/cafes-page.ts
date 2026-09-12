@@ -4,8 +4,10 @@ import { CafeMap } from '../cafe-map/cafe-map';
 import { CafeDetail } from '../cafe-detail/cafe-detail';
 import { CafesService } from '../../../core/cafes/cafes.service';
 import { Cafe } from '../../../core/cafes/cafe.model';
+import { distanceMetres, formatDistance } from '../../../core/geo/distance';
 
 type LocationStatus = 'locating' | 'located' | 'fallback';
+type SortMode = 'distance' | 'name';
 
 const DEFAULT_CENTER: [number, number] = [49.8671, 40.4093];
 
@@ -27,9 +29,33 @@ export class CafesPage implements OnInit {
   protected readonly locationStatus = signal<LocationStatus>('locating');
   protected readonly radius = signal(1500);
   protected readonly selectedCafeId = signal<string | null>(null);
+  protected readonly searchQuery = signal('');
+  protected readonly sortMode = signal<SortMode>('distance');
 
   protected readonly selectedCafe = computed<Cafe | null>(
     () => this.cafes().find((cafe) => cafe.id === this.selectedCafeId()) ?? null,
+  );
+
+  protected readonly visibleCafes = computed<Array<{ cafe: Cafe; distanceM: number }>>(() => {
+    const [centerLng, centerLat] = this.center();
+    const query = this.searchQuery().trim().toLowerCase();
+
+    const withDistance = this.cafes()
+      .filter((cafe) => !query || cafe.name.toLowerCase().includes(query))
+      .map((cafe) => ({
+        cafe,
+        distanceM: distanceMetres(centerLat, centerLng, cafe.lat, cafe.lng),
+      }));
+
+    if (this.sortMode() === 'name') {
+      return withDistance.sort((a, b) => a.cafe.name.localeCompare(b.cafe.name, 'az'));
+    }
+
+    return withDistance.sort((a, b) => a.distanceM - b.distanceM);
+  });
+
+  protected readonly visibleCafeList = computed<Cafe[]>(() =>
+    this.visibleCafes().map((entry) => entry.cafe),
   );
 
   ngOnInit(): void {
@@ -68,6 +94,18 @@ export class CafesPage implements OnInit {
 
   protected closeDetail(): void {
     this.selectedCafeId.set(null);
+  }
+
+  protected onSearchInput(value: string): void {
+    this.searchQuery.set(value);
+  }
+
+  protected onSortChange(value: string): void {
+    this.sortMode.set(value === 'name' ? 'name' : 'distance');
+  }
+
+  protected formatDistanceM(metres: number): string {
+    return formatDistance(metres);
   }
 
   protected formatRadius(metres: number): string {
