@@ -11,6 +11,7 @@ export interface Cafe {
   address: string;
   website: string | null;
   phone: string | null;
+  openingHours: string | null;
 }
 
 interface GeoapifyFeature {
@@ -22,6 +23,7 @@ interface GeoapifyFeature {
     contact?: {
       phone?: string;
     };
+    opening_hours?: string;
   };
   geometry: {
     coordinates: [number, number];
@@ -74,6 +76,7 @@ export class CafesService {
       address: f.properties.formatted,
       website: f.properties.website || null,
       phone: f.properties.contact?.phone || null,
+      openingHours: f.properties.opening_hours || null,
     }));
 
     this.cache.set(cacheKey, {

@@ -85,8 +85,12 @@
       }
     </aside>
 
-    <div class="order-1 h-95 lg:order-2 lg:h-full lg:flex-1">
+    <div class="relative order-1 h-95 lg:order-2 lg:h-full lg:flex-1">
       <app-cafe-map [center]="center()" [cafes]="cafes()" [focusCafeId]="selectedCafeId()" />
+
+      <div class="pointer-events-none absolute inset-x-0 top-0 z-10 flex justify-center p-4 sm:justify-start">
+        <app-cafe-detail [cafe]="selectedCafe()" (closed)="closeDetail()" />
+      </div>
     </div>
   </div>
 </section>

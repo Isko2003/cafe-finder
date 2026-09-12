@@ -6,4 +6,5 @@ export interface Cafe {
   address: string;
   website: string | null;
   phone: string | null;
+  openingHours: string | null;
 }

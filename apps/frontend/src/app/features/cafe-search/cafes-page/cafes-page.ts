@@ -1,5 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CafeMap } from '../cafe-map/cafe-map';
+import { CafeDetail } from '../cafe-detail/cafe-detail';
 import { CafesService } from '../../../core/cafes/cafes.service';
 import { Cafe } from '../../../core/cafes/cafe.model';
 
@@ -8,7 +9,7 @@ type LocationStatus = 'locating' | 'located' | 'fallback';
 const DEFAULT_CENTER: [number, number] = [49.8671, 40.4093];
 
 @Component({
-  imports: [CafeMap],
+  imports: [CafeMap, CafeDetail],
   selector: 'app-cafes-page',
   styleUrl: './cafes-page.css',
   templateUrl: './cafes-page.html',
@@ -25,6 +26,10 @@ export class CafesPage implements OnInit {
   protected readonly locationStatus = signal<LocationStatus>('locating');
   protected readonly radius = signal(1500);
   protected readonly selectedCafeId = signal<string | null>(null);
+
+  protected readonly selectedCafe = computed<Cafe | null>(
+    () => this.cafes().find((cafe) => cafe.id === this.selectedCafeId()) ?? null,
+  );
 
   ngOnInit(): void {
     if (!navigator.geolocation) {
@@ -58,6 +63,10 @@ export class CafesPage implements OnInit {
 
   protected selectCafe(id: string): void {
     this.selectedCafeId.set(id);
+  }
+
+  protected closeDetail(): void {
+    this.selectedCafeId.set(null);
   }
 
   protected formatRadius(metres: number): string {
