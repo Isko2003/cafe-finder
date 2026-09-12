@@ -1,0 +1,85 @@
+<section class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+  <div class="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+    <div>
+      <h1 class="font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">Əlaqə</h1>
+      <p class="mt-6 font-body text-lg leading-relaxed text-ink-soft">
+        Bir kafe tapmadınmı, xəritədə səhv gördün, yoxsa sadəcə fikrini bölüşmək istəyirsən? Yaz,
+        oxuyuruq.
+      </p>
+
+      <dl class="mt-10 flex flex-col gap-6 border-t border-line pt-8 font-body">
+        <div>
+          <dt class="text-sm font-semibold text-ink-soft">E-poçt</dt>
+          <dd class="mt-1 text-[15px] text-ink">
+            <a href="mailto:info&#64;cafefinder.az" class="hover:text-copper-deep"
+              >info&#64;cafefinder.az</a
+            >
+          </dd>
+        </div>
+        <div>
+          <dt class="text-sm font-semibold text-ink-soft">Şəhər</dt>
+          <dd class="mt-1 text-[15px] text-ink">Bakı, Azərbaycan</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="rounded-2xl border border-line bg-paper-soft p-7 sm:p-9">
+      @if (!sent()) {
+        <form class="flex flex-col gap-5" (ngSubmit)="submit()">
+          <div>
+            <label for="name" class="font-body text-sm font-semibold text-ink">Ad</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              [ngModel]="name()"
+              (ngModelChange)="name.set($event)"
+              class="mt-2 w-full rounded-xl border border-line bg-paper px-4 py-3 font-body text-[15px] text-ink outline-none focus:border-copper"
+              placeholder="Adın"
+            />
+          </div>
+          <div>
+            <label for="email" class="font-body text-sm font-semibold text-ink">E-poçt</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              [ngModel]="email()"
+              (ngModelChange)="email.set($event)"
+              class="mt-2 w-full rounded-xl border border-line bg-paper px-4 py-3 font-body text-[15px] text-ink outline-none focus:border-copper"
+              placeholder="sen&#64;numune.az"
+            />
+          </div>
+          <div>
+            <label for="message" class="font-body text-sm font-semibold text-ink">Mesaj</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              [ngModel]="message()"
+              (ngModelChange)="message.set($event)"
+              class="mt-2 w-full resize-none rounded-xl border border-line bg-paper px-4 py-3 font-body text-[15px] text-ink outline-none focus:border-copper"
+              placeholder="Nə demək istəyirsən?"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="mt-2 w-fit rounded-full bg-copper px-7 py-3 font-body text-sm font-semibold text-paper-soft transition-colors hover:bg-copper-deep"
+          >
+            Mesajı göndər
+          </button>
+        </form>
+      } @else {
+        <div class="flex flex-col items-start gap-2 py-6">
+          <h2 class="font-display text-xl font-semibold text-ink">Təşəkkürlər, {{ name() }}.</h2>
+          <p class="font-body text-[15px] text-ink-soft">
+            Mesajın qeydə alındı. Göndərmə funksiyası backend hissəsi qoşulan kimi tam aktiv olacaq.
+          </p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

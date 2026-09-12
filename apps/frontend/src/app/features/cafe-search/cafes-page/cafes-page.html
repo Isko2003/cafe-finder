@@ -1,0 +1,92 @@
+<section class="border-b border-line bg-paper-soft">
+  <div
+    class="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-6 sm:px-8 md:flex-row md:items-center md:justify-between"
+  >
+    <div>
+      <h1 class="font-display text-2xl font-semibold text-ink sm:text-3xl">Kafələri kəşf et</h1>
+      <p class="mt-1 font-body text-sm text-ink-soft">
+        @switch (locationStatus()) {
+          @case ('locating') {
+            Məkanın müəyyən edilir...
+          }
+          @case ('located') {
+            Sənin məkanına görə göstərilir.
+          }
+          @case ('fallback') {
+            Məkan icazəsi alınmadı — Bakı mərkəzi üzrə göstərilir.
+          }
+        }
+      </p>
+    </div>
+
+    <label class="flex items-center gap-3 font-body text-sm font-medium text-ink">
+      Radius
+      <select
+        #radiusSelect
+        class="rounded-full border border-line bg-paper px-4 py-2 text-sm text-ink outline-none focus:border-copper"
+        (change)="onRadiusChange(radiusSelect.value)"
+      >
+        @for (option of radiusOptions; track option) {
+          <option [value]="option" [selected]="option === radius()">
+            {{ formatRadius(option) }}
+          </option>
+        }
+      </select>
+    </label>
+  </div>
+</section>
+
+<section class="mx-auto max-w-6xl px-5 py-8 sm:px-8">
+  <div
+    class="flex flex-col overflow-hidden rounded-2xl border border-line lg:h-[70vh] lg:min-h-130 lg:flex-row"
+  >
+    <aside
+      class="order-2 flex flex-col border-line bg-paper-soft lg:order-1 lg:w-90 lg:shrink-0 lg:overflow-y-auto lg:border-r"
+    >
+      @if (loading()) {
+        <div class="flex items-center gap-3 px-5 py-6 font-body text-sm text-ink-soft">
+          <span class="h-2 w-2 animate-pulse rounded-full bg-copper"></span>
+          Kafələr axtarılır...
+        </div>
+      } @else if (error()) {
+        <div
+          class="mx-5 my-6 rounded-xl border border-pomegranate/30 bg-pomegranate/10 px-4 py-3 font-body text-sm text-pomegranate"
+        >
+          {{ error() }}
+        </div>
+      } @else if (cafes().length === 0) {
+        <div class="px-5 py-6 font-body text-sm text-ink-soft">
+          Bu radiusda kafe tapılmadı. Radiusu artırmağı sına.
+        </div>
+      } @else {
+        <div
+          class="border-b border-line px-5 py-3 font-body text-xs font-semibold uppercase tracking-wide text-ink-soft/70"
+        >
+          {{ cafes().length }} kafe tapıldı
+        </div>
+        <ul>
+          @for (cafe of cafes(); track cafe.id) {
+            <li>
+              <button
+                type="button"
+                class="w-full border-b border-line px-5 py-4 text-left transition-colors hover:bg-paper"
+                [class.bg-paper]="cafe.id === selectedCafeId()"
+                (click)="selectCafe(cafe.id)"
+              >
+                <p class="font-display text-[15px] font-semibold text-ink">{{ cafe.name }}</p>
+                <p class="mt-1 font-body text-sm text-ink-soft">{{ cafe.address }}</p>
+                @if (cafe.phone) {
+                  <p class="mt-1 font-body text-sm text-ink-soft">{{ cafe.phone }}</p>
+                }
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </aside>
+
+    <div class="order-1 h-95 lg:order-2 lg:h-full lg:flex-1">
+      <app-cafe-map [center]="center()" [cafes]="cafes()" [focusCafeId]="selectedCafeId()" />
+    </div>
+  </div>
+</section>

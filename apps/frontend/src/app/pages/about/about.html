@@ -1,0 +1,52 @@
+<section class="mx-auto max-w-3xl px-5 pb-16 pt-16 sm:px-8 sm:pt-20">
+  <h1 class="font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">Haqqımızda</h1>
+  <p class="mt-6 font-body text-lg leading-relaxed text-ink-soft">
+    CafeFinder, tanımadığın bir rayonda oturub "yaxınlıqda oturacaq yeri olan bir kafe haradadır?"
+    sualına cavab axtarmaqdan yorulduğumuz bir gündən doğuldu. Onlarla tətbiqi açıb bağlamaq, hesab
+    yaratmaq, reklamları keçmək əvəzinə — sadəcə xəritəni açıb ən yaxın kafəni görmək istəyirdik.
+  </p>
+  <p class="mt-5 font-body text-lg leading-relaxed text-ink-soft">
+    Ona görə də CafeFinder-i yalnız bir işi yaxşı görmək üçün qururuq: sənin olduğun yerə görə ən
+    yaxın kafələri, lazım olan minimal məlumatla, mümkün qədər tez göstərmək.
+  </p>
+</section>
+
+<section class="border-y border-line bg-paper-soft">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+    <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">Dəyərlərimiz</h2>
+    <div class="mt-10 grid gap-10 sm:grid-cols-3">
+      @for (value of values; track value.title) {
+        <div>
+          <h3 class="font-body text-lg font-semibold text-ink">{{ value.title }}</h3>
+          <p class="mt-2 font-body text-[15px] leading-relaxed text-ink-soft">{{ value.body }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+  <div class="grid items-start gap-12 lg:grid-cols-[1fr_1fr]">
+    <div>
+      <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">Texnologiya</h2>
+      <p class="mt-4 max-w-md font-body leading-relaxed text-ink-soft">
+        Frontend Angular üzərində, xəritə isə açıq mənbəli MapLibre GL və OpenFreeMap dəyərləri ilə
+        qurulub. Backend isə kafe məlumatlarını toplayıb sənin mövqeyinə görə süzür.
+      </p>
+    </div>
+    <div
+      class="flex flex-col gap-4 border-t border-line pt-6 lg:border-t-0 lg:border-l lg:pl-10 lg:pt-0"
+    >
+      <p class="font-body text-[15px] text-ink-soft">
+        Sual, təklif və ya tapdığın bir xəta var? Bizimlə əlaqə saxlamaqdan çəkinmə.
+      </p>
+
+      <a
+        routerLink="/contact"
+        class="w-fit rounded-full bg-night px-6 py-3 font-body text-sm font-semibold text-paper transition-colors hover:bg-night-soft"
+      >
+        Bizimlə əlaqə
+      </a>
+    </div>
+  </div>
+</section>

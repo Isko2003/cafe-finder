@@ -1,0 +1,80 @@
+<header class="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
+    <a routerLink="/" class="flex items-center gap-3" (click)="closeMenu()">
+      <app-logo-mark [size]="38" />
+      <span class="font-display text-xl font-semibold tracking-tight text-ink">CafeFinder</span>
+    </a>
+
+    <nav class="hidden items-center gap-8 md:flex">
+      @for (link of links; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="text-copper-deep"
+          [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+          class="font-body text-[15px] font-medium text-ink-soft transition-colors hover:text-copper-deep"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </nav>
+
+    <a
+      routerLink="/cafes"
+      class="hidden rounded-full bg-night px-5 py-2.5 font-body text-sm font-semibold text-paper transition-colors hover:bg-night-soft md:inline-block"
+    >
+      Kafə tap
+    </a>
+
+    <button
+      type="button"
+      class="flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink md:hidden"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Menyunu aç"
+      (click)="toggleMenu()"
+    >
+      @if (!menuOpen()) {
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path
+            d="M2.5 5h15M2.5 10h15M2.5 15h15"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+          />
+        </svg>
+      } @else {
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path
+            d="M4 4l12 12M16 4L4 16"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+          />
+        </svg>
+      }
+    </button>
+  </div>
+
+  @if (menuOpen()) {
+    <nav class="flex flex-col gap-1 border-t border-line bg-paper px-5 pb-4 pt-2 md:hidden">
+      @for (link of links; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="text-copper-deep bg-paper-soft"
+          [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+          class="rounded-lg px-3 py-2.5 font-body text-[15px] font-medium text-ink-soft"
+          (click)="closeMenu()"
+        >
+          {{ link.label }}
+        </a>
+      }
+
+      <a
+        routerLink="/cafes"
+        class="mt-2 rounded-full bg-night px-4 py-2.5 text-center font-body text-sm font-semibold text-paper"
+        (click)="closeMenu()"
+      >
+        Kafə tap
+      </a>
+    </nav>
+  }
+</header>

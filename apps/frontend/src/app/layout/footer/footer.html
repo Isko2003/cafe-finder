@@ -1,0 +1,61 @@
+<footer class="border-t border-line-dark bg-night text-paper">
+  <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.3fr_1fr_1fr]">
+    <div>
+      <div class="flex items-center gap-3">
+        <app-logo-mark [size]="34" />
+        <span class="font-display text-lg font-semibold">CafeFinder</span>
+      </div>
+      <p class="mt-4 max-w-xs font-body text-sm leading-relaxed text-paper/70">
+        Harada olmağından asılı olmayaraq, ən yaxın kafəni bir neçə saniyəyə xəritədə tapmağın ən
+        sadə yolu.
+      </p>
+    </div>
+
+    <div>
+      <h3 class="font-body text-sm font-semibold text-paper">Naviqasiya</h3>
+      <ul class="mt-4 flex flex-col gap-2.5">
+        <li>
+          <a routerLink="/" class="font-body text-sm text-paper/70 hover:text-copper-soft"
+            >Ana səhifə</a
+          >
+        </li>
+        <li>
+          <a routerLink="/cafes" class="font-body text-sm text-paper/70 hover:text-copper-soft"
+            >Kafələr</a
+          >
+        </li>
+        <li>
+          <a routerLink="/about" class="font-body text-sm text-paper/70 hover:text-copper-soft"
+            >Haqqımızda</a
+          >
+        </li>
+        <li>
+          <a routerLink="/contact" class="font-body text-sm text-paper/70 hover:text-copper-soft"
+            >Əlaqə</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-body text-sm font-semibold text-paper">Əlaqə</h3>
+      <ul class="mt-4 flex flex-col gap-2.5 font-body text-sm text-paper/70">
+        <li>Bakı, Azərbaycan</li>
+        <li>
+          <a href="mailto:info&#64;cafefinder.az" class="hover:text-copper-soft"
+            >info&#64;cafefinder.az</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-line-dark">
+    <div
+      class="mx-auto flex max-w-6xl flex-col-reverse items-center gap-3 px-5 py-5 text-center font-body text-xs text-paper/50 sm:flex-row sm:justify-between sm:px-8 sm:text-left"
+    >
+      <p>© {{ year }} CafeFinder. Bütün hüquqlar qorunur.</p>
+      <p>Xəritə məlumatları OpenFreeMap və MapLibre GL əsasında göstərilir.</p>
+    </div>
+  </div>
+</footer>

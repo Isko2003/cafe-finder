@@ -1,0 +1,163 @@
+<!-- Hero -->
+<section class="mx-auto max-w-6xl px-5 pb-20 pt-14 sm:px-8 sm:pt-20 lg:pb-28">
+  <div class="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
+    <div>
+      <h1
+        class="font-display text-4xl font-semibold leading-[1.12] text-ink sm:text-5xl lg:text-[3.4rem]"
+      >
+        Bakıda növbəti fincanın üçün ən yaxın kafəni tap.
+      </h1>
+      <p class="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
+        CafeFinder harada dayandığını görür və ətrafdakı kafələri birbaşa xəritədə göstərir —
+        ünvanı, telefonu və saytı ilə birgə.
+      </p>
+
+      <div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <a
+          routerLink="/cafes"
+          class="rounded-full bg-copper px-7 py-3.5 text-center font-body text-[15px] font-semibold text-paper-soft transition-colors hover:bg-copper-deep"
+        >
+          Yaxınlıqdakı kafələri göstər
+        </a>
+
+        <a
+          routerLink="/about"
+          class="font-body text-[15px] font-semibold text-ink underline decoration-line decoration-2 underline-offset-4 hover:decoration-copper"
+        >
+          Layihə haqqında
+        </a>
+      </div>
+
+      <p class="mt-8 border-t border-line pt-6 font-body text-sm text-ink-soft">
+        Nərimanovdan İçərişəhərə, Xətai&#8202;–&#8202;dən Yasamala qədər — Bakının istənilən
+        nöqtəsindən işləyir.
+      </p>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-md">
+      <div class="absolute -inset-3 -z-10 rotate-2 rounded-4xl bg-copper-soft/30"></div>
+      <div class="overflow-hidden rounded-[1.75rem] bg-night p-5 shadow-xl shadow-ink/10">
+        <svg
+          viewBox="0 0 420 360"
+          class="w-full"
+          role="img"
+          aria-label="Kafələri göstərən sadə xəritə eskizi"
+        >
+          <defs>
+            <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+              <circle cx="1.5" cy="1.5" r="1.5" fill="var(--color-paper)" opacity="0.08" />
+            </pattern>
+          </defs>
+          <rect width="420" height="360" fill="url(#grid)" />
+
+          <path
+            d="M70 260 C 120 230, 130 170, 190 150 S 300 90, 340 70"
+            fill="none"
+            stroke="var(--color-paper)"
+            stroke-opacity="0.25"
+            stroke-width="2.5"
+            stroke-dasharray="2 10"
+            stroke-linecap="round"
+          />
+
+          <circle cx="70" cy="260" r="7" fill="var(--color-copper-soft)" />
+          <circle
+            cx="70"
+            cy="260"
+            r="14"
+            fill="none"
+            stroke="var(--color-copper-soft)"
+            stroke-width="1.4"
+            opacity="0.5"
+          />
+
+          <!-- pins -->
+          <g transform="translate(178,120)">
+            <path
+              d="M0 0c-11 0-20 9-20 20 0 15 20 37 20 37s20-22 20-37c0-11-9-20-20-20Z"
+              fill="var(--color-pomegranate)"
+            />
+            <circle cx="0" cy="20" r="7" fill="var(--color-paper)" />
+          </g>
+          <g transform="translate(328,58)">
+            <path
+              d="M0 0c-11 0-20 9-20 20 0 15 20 37 20 37s20-22 20-37c0-11-9-20-20-20Z"
+              fill="var(--color-copper)"
+            />
+            <circle cx="0" cy="20" r="7" fill="var(--color-paper)" />
+          </g>
+          <g transform="translate(250,215)">
+            <path
+              d="M0 0c-9 0-16.5 7.5-16.5 16.5 0 12.5 16.5 30.5 16.5 30.5s16.5-18 16.5-30.5C16.5 7.5 9 0 0 0Z"
+              fill="var(--color-copper-soft)"
+            />
+            <circle cx="0" cy="16.5" r="5.8" fill="var(--color-night)" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="border-y border-line bg-paper-soft">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+    <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">Necə işləyir</h2>
+    <p class="mt-3 max-w-md font-body text-ink-soft">Üç sadə addım, heç bir qeydiyyat olmadan.</p>
+
+    <div class="relative mt-14 grid gap-10 sm:grid-cols-3 sm:gap-6">
+      <div
+        class="pointer-events-none absolute left-[16.5%] right-[16.5%] top-6 hidden border-t-2 border-dashed border-line sm:block"
+      ></div>
+
+      @for (step of steps; track step.index) {
+        <div class="relative">
+          <div
+            class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 border-copper bg-paper-soft font-display text-lg font-semibold text-copper-deep"
+          >
+            {{ step.index }}
+          </div>
+          <h3 class="mt-5 font-body text-lg font-semibold text-ink">{{ step.title }}</h3>
+          <p class="mt-2 font-body text-[15px] leading-relaxed text-ink-soft">{{ step.body }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+  <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+    <div>
+      <h2 class="font-display text-3xl font-semibold text-ink sm:text-4xl">Niyə CafeFinder?</h2>
+      <p class="mt-4 max-w-sm font-body leading-relaxed text-ink-soft">
+        Kafe axtarışını mürəkkəbləşdirən tətbiqlərdən yorulmuşuq. CafeFinder tək bir işi yaxşı
+        görür: haradan olursan ol, ən yaxın kafələri göstərmək.
+      </p>
+    </div>
+
+    <div class="flex flex-col">
+      @for (benefit of benefits; track benefit.title) {
+        <div class="border-t border-line py-6 first:pt-0 last:border-b">
+          <h3 class="font-body text-lg font-semibold text-ink">{{ benefit.title }}</h3>
+          <p class="mt-2 font-body text-[15px] leading-relaxed text-ink-soft">{{ benefit.body }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="bg-night">
+  <div
+    class="mx-auto flex max-w-6xl flex-col items-start gap-6 px-5 py-16 sm:px-8 md:flex-row md:items-center md:justify-between"
+  >
+    <h2 class="max-w-md font-display text-3xl font-semibold text-paper sm:text-4xl">
+      Fincanın hazır olsun deyə, kafəni indi tap.
+    </h2>
+
+    <a
+      routerLink="/cafes"
+      class="shrink-0 rounded-full bg-copper px-7 py-3.5 font-body text-[15px] font-semibold text-paper-soft transition-colors hover:bg-copper-soft"
+    >
+      Xəritəni aç
+    </a>
+  </div>
+</section>

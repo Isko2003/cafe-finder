@@ -1,3 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+@theme {
+  --color-paper: #f1e7d6;
+  --color-paper-soft: #faf5ec;
+
+  --color-night: #13262f;
+  --color-night-soft: #1c3540;
+
+  --color-ink: #201a14;
+  --color-ink-soft: #4a4136;
+
+  --color-copper: #c17817;
+  --color-copper-soft: #e3a94c;
+  --color-copper-deep: #97590c;
+
+  --color-pomegranate: #8a2e3b;
+  --color-pomegranate-soft: #b0505d;
+
+  --color-line: #d8c9ac;
+  --color-line-dark: #2c4650;
+
+  --font-display: 'Petrona', 'Georgia', serif;
+  --font-body: 'Manrope', 'Segoe UI', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-copper);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

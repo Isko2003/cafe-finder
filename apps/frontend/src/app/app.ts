@@ -1,13 +1,13 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CafeMap } from './features/cafe-search/cafe-map/cafe-map';
+import { Header } from './layout/header/header';
+import { Footer } from './layout/footer/footer';
 
 @Component({
-  imports: [CafeMap],
   selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, Header, Footer],
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
-export class App {
-  protected readonly title = signal('cafe-finder');
-}
+export class App {}
